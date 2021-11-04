@@ -17,10 +17,21 @@ class TabBarViewController: UITabBarController {
         let OpportunitiesViewController = OpportunitiesViewController()
         let NotificationViewController = NotificationViewController()
         let EventsViewController = EventsViewController()
+      
+      homeViewController.title = "Home"
+      OpportunitiesViewController.title = "Opportunities"
+      AddViewController.title = "Add"
+      NotificationViewController.title = "Notification"
+      EventsViewController.title = "Events"
+      
 // MARK: Assign viewController to tab Bar
-      self.setViewControllers([homeViewController, AddViewController,OpportunitiesViewController, NotificationViewController, EventsViewController], animated: false)
+      self.setViewControllers([homeViewController, OpportunitiesViewController,AddViewController, NotificationViewController, EventsViewController], animated: false)
+      
       guard let items = self.tabBar.items else { return }
-      let images = ["house", "house", "house", "house","house"]
+      tabBar.backgroundColor = .white
+      tabBar.layer.cornerRadius = 30
+      
+      let images = ["timelapse", "case", "plus.circle", "bell","calendar"]
       for item in 0...4 {
         items[item].image = UIImage(systemName: images[item])
       }

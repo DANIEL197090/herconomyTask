@@ -8,11 +8,12 @@
 import UIKit
 // MARK: - EXTENSION
 extension  OpportunitiesViewController{
+  // MARK: - FUNCTION TO GET DATA FROM THE API
   func getdata() {
     loadData.fetchData { [self] (data) in
       details = data
-    }
-    
+      print(details as Any)
+    }    
   }
                 
   // MARK: - FUNCTION
@@ -25,8 +26,6 @@ extension  OpportunitiesViewController{
     addDefaultViews()
     investmentcollectionView.anchorWithConstantsToTop(top: segmentedControl2.topAnchor,
                                             left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 50, leftConstant: 30, bottomConstant: 170, rightConstant: 30)
-//    fundingCollectionView.anchorWithConstantsToTop(top: searchField.topAnchor,
-//                                            left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 100, leftConstant: 30, bottomConstant: 200, rightConstant: 30)
   }
   // MARK: - COLLECTION VIEW
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -8,16 +8,19 @@
 import UIKit
 
 class OpportunitiesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+  // MARK: - VARIABLES
+  var loadData = LoadData()
+  var details : Details?
   // MARK: - VARIABLE TO HOLD ALL CARD IN AN ARRAY
+  let cards: [Card] = {
+    let firstCard = Card (title: "Shecluded fixed \n Income Investment", duration: "15.00% in 12 months", amount: "#10000", riskLevel: "Low", risk: "Risk", amountRange: "Minimum", description: "  availbale  ")
+    let secondCard = Card (title: "Sweet potato", duration: "10.00% in 10 months", amount: "#95000", riskLevel: "#1000", risk: "Per unit", amountRange: "Remaining", description: "  availbale  ")
+    let thirdCard = Card (title: "Rice Investment", duration: "20.00% in 5 months", amount: "#5000", riskLevel: "669", risk: "Per Unit", amountRange: "Remaining", description: "  sold out  ")
+    return [firstCard, secondCard, thirdCard]
+  }()
   
-  //let cards: [Card] = {
-    //let  firstCard = 
-//    let firstCard = Card(title: "" time: "20 mins", imageName: AppImages.anxietyProblems.image)
-//    let secondCard = Card(title: AppImages.sleepBetter.image, time: "35 mins", imageName: AppImages.anxietyProblems.image)
-//    let thirdCard = Card(title: AppImages.creativeBlock.image, time: "15 mins", imageName: AppImages.creativeBlock.image)
-//    return [firstCard, secondCard, thirdCard]
-  //}()
-  
+
+  // MARK: - VIEW WRAPPER
   lazy var  viewWrapper: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00)
@@ -26,8 +29,8 @@ class OpportunitiesViewController: UIViewController, UICollectionViewDataSource,
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
-  
-lazy var opportunityLabel: UILabel = {
+  // MARK: - VARIABLE DISPLAYING OPPORNUNITY BOARD
+  lazy var opportunityLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.text = "Opportunity Board"
@@ -37,8 +40,7 @@ lazy var opportunityLabel: UILabel = {
     label.numberOfLines = 1
     return label
   }()
-  
-
+  // MARK: - VARIABLE SEARCH FIELD
   lazy var searchField: LeftPaddedTextField = {
     let textField = LeftPaddedTextField()
     textField.layer.borderColor = UIColor.black.cgColor
@@ -53,101 +55,150 @@ lazy var opportunityLabel: UILabel = {
     return textField
   }()
   
-  lazy var agriculureLabel: UILabel = {
-      let label = UILabel()
-      label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = "A"
-      label.font  = UIFont.boldSystemFont(ofSize: 25.0)
-      label.textColor = .white
-      label.textAlignment = .center
-      label.numberOfLines = 1
-      return label
-    }()
- 
+  // MARK: - VARIABLE OF COLOR TITLE OF THE FIRST SEGMENTED CONTROL
+  var titleTextAttribute = [NSAttributedString.Key.foregroundColor: UIColor.white]
+  
+  // MARK: - AN ARRAY OF SEGEMENTED CONTROL
   lazy var segmentedItems = ["Investment","Funding","others"]
   lazy var segmentedControl: UISegmentedControl = {
     let segmentedControl = UISegmentedControl(items: segmentedItems)
     segmentedControl.selectedSegmentIndex = 0
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
     segmentedControl.selectedSegmentTintColor =  .systemOrange
+    segmentedControl.setTitleTextAttributes(titleTextAttribute, for: .selected)
     segmentedControl.addTarget(self, action: #selector(controlChanged), for: .valueChanged)
     segmentedControl.backgroundColor = .white
     return segmentedControl
   }()
   
+  // MARK: - AN ARRAY OF THE SECOND SEGEMENTED CONTROL
+  lazy var segmentedItem2 = ["Agriculture", "Fixed Income"]
   
-  lazy var collectionView: UICollectionView = {
+  // MARK: - VARIABLE OF COLOR TITLE OF THE SEGEMENTED SECOND SEGMENTED CONTROL
+  var titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange]
+  lazy var segmentedControl2: UISegmentedControl = {
+    let segmentedControl = UISegmentedControl(items: segmentedItem2)
+    segmentedControl.selectedSegmentIndex = 0
+    segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+    segmentedControl.selectedSegmentTintColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00)
+    segmentedControl.layer.borderWidth = 0
+    segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+    segmentedControl.addTarget(self, action: #selector(controlChanged), for: .valueChanged)
+    segmentedControl.backgroundColor = .white
+    return segmentedControl
+  }()
+  
+  lazy var fundingSegmentedItem = ["Loans", "Grants"]
+  lazy var fundingSegmentedControl: UISegmentedControl = {
+    let segmentedControl = UISegmentedControl(items: fundingSegmentedItem)
+    segmentedControl.selectedSegmentIndex = 0
+    segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+    segmentedControl.selectedSegmentTintColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00)
+    segmentedControl.isHidden = true
+    segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+    segmentedControl.addTarget(self, action: #selector(controlChanged), for: .valueChanged)
+    segmentedControl.backgroundColor = .white
+    return segmentedControl
+  }()
+  
+  lazy var othersSegmentedItem = ["Scholarship", "Jobs"]
+  lazy var othersSegmentedControl: UISegmentedControl = {
+    let segmentedControl = UISegmentedControl(items: othersSegmentedItem)
+    segmentedControl.selectedSegmentIndex = 0
+    segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+    segmentedControl.selectedSegmentTintColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00)
+    segmentedControl.isHidden = true
+    segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+    segmentedControl.addTarget(self, action: #selector(controlChanged), for: .valueChanged)
+    segmentedControl.backgroundColor = .white
+    return segmentedControl
+  }()
+  // MARK: - INVESTMENT COLLECTION VIEW
+  lazy var investmentcollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
     layout.minimumLineSpacing = 45
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.backgroundColor =  UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.00)
+    collectionView.backgroundColor =  .clear
     collectionView.showsVerticalScrollIndicator = false
     collectionView.layer.cornerRadius = 10
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     return collectionView
   }()
+  
+  lazy var fundingCollectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .vertical
+    layout.minimumLineSpacing = 45
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.dataSource = self
+    collectionView.delegate = self
+    collectionView.backgroundColor =  .clear
+    collectionView.showsVerticalScrollIndicator = false
+    collectionView.layer.cornerRadius = 10
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    return collectionView
+  }()
+  
+  lazy var  fundingview: UIView = {
+    let view = UIView()
+    view.layer.cornerRadius = 40
+    view.backgroundColor = .black
+    view.isUserInteractionEnabled = true
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  
+  lazy var  othersView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00)
+    view.layer.cornerRadius = 40
+    view.backgroundColor = .orange
+    view.isUserInteractionEnabled = true
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  
   let cellId = "cellId"
+  // MARK: - VIEW DID LOAD
   override func viewDidLoad() {
-        super.viewDidLoad()
-      view.backgroundColor = .systemOrange
-    collectionView.register(InvestmentCollectionView.self, forCellWithReuseIdentifier: cellId)
-      setupConstriants()
-      constraintViews()
-    }
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-  }
-
-  func setupConstriants() {
-    view.addSubview(viewWrapper)
-    view.addSubview(opportunityLabel)
-    view.addSubview(segmentedControl)
-    view.addSubview(searchField)
-//    navigationItem.leftBarButtonItem = UIBarButtonItem(image: "rice"., style: <#T##UIBarButtonItem.Style#>, target: <#T##Any?#>, action: <#T##Selector?#>
-
-    NSLayoutConstraint.activate([
-      opportunityLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-      opportunityLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
-      viewWrapper.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-      viewWrapper.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-      viewWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-      viewWrapper.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-      segmentedControl.topAnchor.constraint(equalToSystemSpacingBelow: viewWrapper.topAnchor, multiplier: 5),
-      segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-      segmentedControl.heightAnchor.constraint(equalToConstant: 50),
-      segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
-      searchField.topAnchor.constraint(equalTo: segmentedControl.topAnchor, constant: 70),
-      searchField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-      searchField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-      searchField.heightAnchor.constraint(equalToConstant: 50),
-    ])
+    super.viewDidLoad()
+    view.backgroundColor = .systemOrange
+    investmentcollectionView.register(InvestmentCollectionView.self, forCellWithReuseIdentifier: cellId)
+    setupConstriants()
+    constraintViews()
+    getdata()
   }
   
-  @objc func click(){
-    
-  }
-  class LeftPaddedTextField: UITextField {
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-      return CGRect(x: bounds.origin.x + 10, y: bounds.origin.y, width: bounds.width + 10, height: bounds.height)
-    }
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-      return CGRect(x: bounds.origin.x + 10, y: bounds.origin.y, width: bounds.width + 10, height: bounds.height)
-    }
-  }
+  @objc func click(){}
 
-  var titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+  // MARK: - FUNCTION WHEN A SEGMENTED CONTROL IS SELECTED
   @objc func controlChanged() {
     switch segmentedControl.selectedSegmentIndex {
     case 0 :
-      collectionView.backgroundColor = .red
+      investmentcollectionView.backgroundColor = .clear
+      segmentedControl2.isHidden =  false
+      fundingSegmentedControl.isHidden = true
+      investmentcollectionView.isHidden = false
+      othersSegmentedControl.isHidden = true
+      othersView.isHidden = true
+      fundingview.isHidden = true
     case 1:
-      collectionView.backgroundColor = .blue
-      
+      investmentcollectionView.isHidden = true
+      segmentedControl2.isHidden =  true
+      fundingSegmentedControl.isHidden = false
+      investmentcollectionView.isHidden = true
+      othersSegmentedControl.isHidden = true
+      fundingview.isHidden = false
+      othersView.isHidden = true
     default:
-      collectionView.backgroundColor = .green
+      investmentcollectionView.backgroundColor = .clear
+      fundingSegmentedControl.isHidden = true
+      othersSegmentedControl.isHidden = false
+      investmentcollectionView.isHidden = true
+      othersView.isHidden = false
     }
   }
 }

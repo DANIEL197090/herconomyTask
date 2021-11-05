@@ -6,12 +6,12 @@
 //
 
 import UIKit
-struct Details: Decodable {
+struct Details: Codable {
   let page: Int
-  let result: [Result]
+  let results: [Result]
 }
 
-struct Result: Decodable{
+struct Result: Codable {
   let poster_path: String
 }
 

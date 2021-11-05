@@ -6,11 +6,14 @@
 //
 
 import Foundation
+
 struct Card {
     let title: String
-    let time: String
-    let imageName: String
+    let duration: String
     let amount: String
-  let percent: String
+    let riskLevel: String
+   let  risk: String
+   let amountRange: String
+  let description: String
 }
 

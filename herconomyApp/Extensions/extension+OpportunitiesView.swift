@@ -8,34 +8,40 @@
 import UIKit
 // MARK: - EXTENSION
 extension  OpportunitiesViewController{
+  func getdata() {
+    loadData.fetchData { [self] (data) in
+      details = data
+    }
+    
+  }
+                
   // MARK: - FUNCTION
   func addDefaultViews() {
-    view.addSubview(collectionView)
+    view.addSubview(investmentcollectionView)
+    view.addSubview(fundingCollectionView)
   }
   // MARK: - FUNCTION TO SET VIEW CONSTRIANT
   func constraintViews() {
     addDefaultViews()
-    collectionView.anchorWithConstantsToTop(top: searchField.topAnchor,
-                                            left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 100, leftConstant: 30, bottomConstant: 200, rightConstant: 30)
+    investmentcollectionView.anchorWithConstantsToTop(top: segmentedControl2.topAnchor,
+                                            left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 50, leftConstant: 30, bottomConstant: 170, rightConstant: 30)
+//    fundingCollectionView.anchorWithConstantsToTop(top: searchField.topAnchor,
+//                                            left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 100, leftConstant: 30, bottomConstant: 200, rightConstant: 30)
   }
   // MARK: - COLLECTION VIEW
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    5
+      return cards.count
   }
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//    guard let investCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? InvestmentCollectionView else { return UICollectionViewCell()
-     let  investCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath as IndexPath)
-
-            // cell.backgroundColor = UIColor.green
-    //}
-   investCell.layer.cornerRadius = 60
-    //let card = cards[indexPath.row]
-    //exploreCell.card = card
-    return  investCell
-    
+      guard let investCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? InvestmentCollectionView else { return UICollectionViewCell()
+    }
+     investCell.layer.cornerRadius = 50
+      let card = cards[indexPath.row]
+      investCell.card = card
+      return  investCell
   }
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: view.frame.width, height: 200)
+    return CGSize(width: view.frame.width, height: 220)
   }
 }
 

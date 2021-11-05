@@ -9,12 +9,14 @@ import UIKit
 
 class OpportunitiesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
   // MARK: - VARIABLE TO HOLD ALL CARD IN AN ARRAY
+  
   //let cards: [Card] = {
+    //let  firstCard = 
 //    let firstCard = Card(title: "" time: "20 mins", imageName: AppImages.anxietyProblems.image)
 //    let secondCard = Card(title: AppImages.sleepBetter.image, time: "35 mins", imageName: AppImages.anxietyProblems.image)
 //    let thirdCard = Card(title: AppImages.creativeBlock.image, time: "15 mins", imageName: AppImages.creativeBlock.image)
 //    return [firstCard, secondCard, thirdCard]
- // }()
+  //}()
   
   lazy var  viewWrapper: UIView = {
     let view = UIView()
@@ -73,12 +75,6 @@ lazy var opportunityLabel: UILabel = {
     return segmentedControl
   }()
   
-//  lazy var views: UIView = {
-//    let view = UIView()
-//    view.backgroundColor = .orange
-//    view.translatesAutoresizingMaskIntoConstraints = false
-//    return view
-//  }()
   
   lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -89,6 +85,7 @@ lazy var opportunityLabel: UILabel = {
     collectionView.delegate = self
     collectionView.backgroundColor =  UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.00)
     collectionView.showsVerticalScrollIndicator = false
+    collectionView.layer.cornerRadius = 10
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     return collectionView
   }()
@@ -108,10 +105,9 @@ lazy var opportunityLabel: UILabel = {
     view.addSubview(viewWrapper)
     view.addSubview(opportunityLabel)
     view.addSubview(segmentedControl)
-   // view.addSubview(views)
     view.addSubview(searchField)
+//    navigationItem.leftBarButtonItem = UIBarButtonItem(image: "rice"., style: <#T##UIBarButtonItem.Style#>, target: <#T##Any?#>, action: <#T##Selector?#>
 
-    
     NSLayoutConstraint.activate([
       opportunityLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
       opportunityLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
@@ -124,16 +120,15 @@ lazy var opportunityLabel: UILabel = {
       segmentedControl.heightAnchor.constraint(equalToConstant: 50),
       segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
       searchField.topAnchor.constraint(equalTo: segmentedControl.topAnchor, constant: 70),
-      searchField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+      searchField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
       searchField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
       searchField.heightAnchor.constraint(equalToConstant: 50),
-//      views.topAnchor.constraint(equalTo: segmentedControl.topAnchor, constant: 150),
-//      views.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-//      views.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-//      views.heightAnchor.constraint(equalToConstant: 200)
     ])
   }
   
+  @objc func click(){
+    
+  }
   class LeftPaddedTextField: UITextField {
     override func textRect(forBounds bounds: CGRect) -> CGRect {
       return CGRect(x: bounds.origin.x + 10, y: bounds.origin.y, width: bounds.width + 10, height: bounds.height)
@@ -143,7 +138,6 @@ lazy var opportunityLabel: UILabel = {
     }
   }
 
-  
   var titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
   @objc func controlChanged() {
     switch segmentedControl.selectedSegmentIndex {
@@ -151,6 +145,7 @@ lazy var opportunityLabel: UILabel = {
       collectionView.backgroundColor = .red
     case 1:
       collectionView.backgroundColor = .blue
+      
     default:
       collectionView.backgroundColor = .green
     }

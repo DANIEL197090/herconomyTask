@@ -18,7 +18,7 @@
 		B4609BAC273413D700DC0176 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4609BAB273413D700DC0176 /* NotificationViewController.swift */; };
 		B4609BAE273413EA00DC0176 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4609BAD273413EA00DC0176 /* EventsViewController.swift */; };
 		B4609BB22734647F00DC0176 /* extension+OpportunitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4609BB12734647F00DC0176 /* extension+OpportunitiesView.swift */; };
-		B4609BB42734651600DC0176 /* investmentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4609BB32734651600DC0176 /* investmentCollectionViewCell.swift */; };
+		B4609BB42734651600DC0176 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4609BB32734651600DC0176 /* CollectionViewCell.swift */; };
 		B4609BB627347A3F00DC0176 /* investmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4609BB527347A3F00DC0176 /* investmentModel.swift */; };
 		B4609BBC273530FE00DC0176 /* DataGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4609BBB273530FE00DC0176 /* DataGetter.swift */; };
 		B4609BBE27353BA500DC0176 /* serviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4609BBD27353BA500DC0176 /* serviceModel.swift */; };
@@ -39,7 +39,7 @@
 		B4609BAB273413D700DC0176 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		B4609BAD273413EA00DC0176 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		B4609BB12734647F00DC0176 /* extension+OpportunitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "extension+OpportunitiesView.swift"; sourceTree = "<group>"; };
-		B4609BB32734651600DC0176 /* investmentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = investmentCollectionViewCell.swift; sourceTree = "<group>"; };
+		B4609BB32734651600DC0176 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		B4609BB527347A3F00DC0176 /* investmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = investmentModel.swift; sourceTree = "<group>"; };
 		B4609BBB273530FE00DC0176 /* DataGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataGetter.swift; sourceTree = "<group>"; };
 		B4609BBD27353BA500DC0176 /* serviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = serviceModel.swift; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 		B4609BB72734918E00DC0176 /* cell */ = {
 			isa = PBXGroup;
 			children = (
-				B4609BB32734651600DC0176 /* investmentCollectionViewCell.swift */,
+				B4609BB32734651600DC0176 /* CollectionViewCell.swift */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -227,7 +227,7 @@
 				B4609B952734115C00DC0176 /* TabBarViewController.swift in Sources */,
 				B4609BAE273413EA00DC0176 /* EventsViewController.swift in Sources */,
 				B4609BA8273413B300DC0176 /* OpportunitiesViewController.swift in Sources */,
-				B4609BB42734651600DC0176 /* investmentCollectionViewCell.swift in Sources */,
+				B4609BB42734651600DC0176 /* CollectionViewCell.swift in Sources */,
 				B4609BAA273413C200DC0176 /* AddViewController.swift in Sources */,
 				B4609BAC273413D700DC0176 /* NotificationViewController.swift in Sources */,
 				B4609BBE27353BA500DC0176 /* serviceModel.swift in Sources */,

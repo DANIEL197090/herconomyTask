@@ -15,5 +15,6 @@ struct Card {
    let  risk: String
    let amountRange: String
   let description: String
+  let picture: String
 }
 

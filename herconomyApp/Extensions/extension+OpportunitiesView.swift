@@ -18,27 +18,55 @@ extension  OpportunitiesViewController{
                 
   // MARK: - FUNCTION
   func addDefaultViews() {
-    view.addSubview(investmentcollectionView)
+    view.addSubview(collectionView)
     view.addSubview(fundingCollectionView)
   }
   // MARK: - FUNCTION TO SET VIEW CONSTRIANT
   func constraintViews() {
     addDefaultViews()
-    investmentcollectionView.anchorWithConstantsToTop(top: segmentedControl2.topAnchor,
+    collectionView.anchorWithConstantsToTop(top: segmentedControl2.topAnchor,
                                             left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 50, leftConstant: 30, bottomConstant: 170, rightConstant: 30)
   }
+  
+  
   // MARK: - COLLECTION VIEW
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      return cards.count
+    if segmentedControl.selectedSegmentIndex == 0 {
+      return investmentCards.count
+    } else if segmentedControl.selectedSegmentIndex == 1  {
+      return fundingCards.count
+    }else {
+      return othersCards.count
+    }
   }
+  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-      guard let investCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? InvestmentCollectionView else { return UICollectionViewCell()
+    
+    if segmentedControl.selectedSegmentIndex == 0 {
+      guard let investCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? CollectionView else { return UICollectionViewCell()
     }
      investCell.layer.cornerRadius = 50
-      let card = cards[indexPath.row]
+      let card = investmentCards[indexPath.row]
       investCell.card = card
       return  investCell
+      
+    } else if  segmentedControl.selectedSegmentIndex == 1 {
+      guard let investCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? CollectionView else { return UICollectionViewCell()
+    }
+     investCell.layer.cornerRadius = 50
+      let card = fundingCards[indexPath.row]
+      investCell.card = card
+      return  investCell
+    }  else {
+      guard let investCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? CollectionView else { return UICollectionViewCell()
+    }
+     investCell.layer.cornerRadius = 50
+      let card = othersCards[indexPath.row]
+      investCell.card = card
+      return  investCell
+    }
   }
+  
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: view.frame.width, height: 220)
   }

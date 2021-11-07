@@ -11,8 +11,15 @@ class HomeViewController: UIViewController {
   
   override func viewDidLoad() {
         super.viewDidLoad()
-      view.backgroundColor = .systemOrange
+      view.backgroundColor = .white
+  
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.dash"), style: .done, target: self, action: #selector(didTapButton))
+    
     }
   
+  @objc func didTapButton() {
+    
+  }
+
 }
 

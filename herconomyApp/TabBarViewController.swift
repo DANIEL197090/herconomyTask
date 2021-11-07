@@ -11,6 +11,7 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+  
 // MARK: Create instance of viewControllers
         let homeViewController = HomeViewController()
         let AddViewController = AddViewController()

@@ -6,19 +6,31 @@
 //
 
 import UIKit
-
 class OpportunitiesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
   // MARK: - VARIABLES
   var loadData = LoadData()
   var details : Details?
   // MARK: - VARIABLE TO HOLD ALL CARD IN AN ARRAY
-  let cards: [Card] = {
-    let firstCard = Card (title: "Shecluded fixed \n Income Investment", duration: "15.00% in 12 months", amount: "#10000", riskLevel: "Low", risk: "Risk", amountRange: "Minimum", description: "  availbale  ")
-    let secondCard = Card (title: "Sweet potato", duration: "10.00% in 10 months", amount: "#95000", riskLevel: "#1000", risk: "Per unit", amountRange: "Remaining", description: "  availbale  ")
-    let thirdCard = Card (title: "Rice Investment", duration: "20.00% in 5 months", amount: "#5000", riskLevel: "669", risk: "Per Unit", amountRange: "Remaining", description: "  sold out  ")
+  
+  let investmentCards: [Card] = {
+    let firstCard = Card (title: "Shecluded fixed \n Income Investment", duration: "15.00% in 12 months", amount: "#10000", riskLevel: "Low", risk: "Risk", amountRange: "Minimum", description: "  availbale  ", picture: "rice")
+    let secondCard = Card (title: "Sweet potato", duration: "10.00% in 10 months", amount: "#95000", riskLevel: "#1000", risk: "Per unit", amountRange: "Remaining", description: "  availbale  ", picture: "darkMode")
+    let thirdCard = Card (title: "Rice Investment", duration: "20.00% in 5 months", amount: "#5000", riskLevel: "669", risk: "Per Unit", amountRange: "Remaining", description: "  sold out  ", picture: "food")
     return [firstCard, secondCard, thirdCard]
   }()
   
+  let fundingCards: [Card] = {
+    let firstCard = Card (title: "AGS x Shecluded Loan \n for women", duration: "In June 20220, AGS Tribe ", amount: "#10000", riskLevel: "Low", risk: "Risk", amountRange: "Minimum", description: "", picture: "darkMode")
+    return [firstCard,]
+  }()
+  
+  let othersCards: [Card] = {
+    let firstCard = Card (title: "Apply for the because \n acclerator 2022 \n for \n Early-to-middle", duration: "", amount: "#10000", riskLevel: "Low", risk: "Risk", amountRange: "Minimum", description: "  availbale  ", picture: "rice")
+    let secondCard = Card (title: "Sweet potato", duration: "10.00% in 10 months", amount: "#95000", riskLevel: "#1000", risk: "Per unit", amountRange: "Remaining", description: "  availbale  ", picture: "dark")
+    let thirdCard = Card (title: "Rice Investment", duration: "20.00% in 5 months", amount: "#5000", riskLevel: "669", risk: "Per Unit", amountRange: "Remaining", description: "  sold out  ", picture: "rice")
+    return [firstCard, secondCard, thirdCard]
+  }()
+
 
   // MARK: - VIEW WRAPPER
   lazy var  viewWrapper: UIView = {
@@ -57,12 +69,13 @@ class OpportunitiesViewController: UIViewController, UICollectionViewDataSource,
   
   // MARK: - VARIABLE OF COLOR TITLE OF THE FIRST SEGMENTED CONTROL
   var titleTextAttribute = [NSAttributedString.Key.foregroundColor: UIColor.white]
-  
   // MARK: - AN ARRAY OF SEGEMENTED CONTROL
   lazy var segmentedItems = ["Investment","Funding","others"]
+  var font = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20.0)]
   lazy var segmentedControl: UISegmentedControl = {
     let segmentedControl = UISegmentedControl(items: segmentedItems)
     segmentedControl.selectedSegmentIndex = 0
+    segmentedControl.setTitleTextAttributes(font, for: .normal)
     segmentedControl.translatesAutoresizingMaskIntoConstraints = false
     segmentedControl.selectedSegmentTintColor =  .systemOrange
     segmentedControl.setTitleTextAttributes(titleTextAttribute, for: .selected)
@@ -114,7 +127,7 @@ class OpportunitiesViewController: UIViewController, UICollectionViewDataSource,
     return segmentedControl
   }()
   // MARK: - INVESTMENT COLLECTION VIEW
-  lazy var investmentcollectionView: UICollectionView = {
+  lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
     layout.minimumLineSpacing = 45
@@ -166,41 +179,49 @@ class OpportunitiesViewController: UIViewController, UICollectionViewDataSource,
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemOrange
-    investmentcollectionView.register(InvestmentCollectionView.self, forCellWithReuseIdentifier: cellId)
+    collectionView.register(CollectionView.self, forCellWithReuseIdentifier: cellId)
     setupConstriants()
     constraintViews()
     getdata()
+    othersView.isHidden = true
+    fundingview.isHidden  = true
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.dash"), style: .done, target: self, action: #selector(didTapButton))
   }
   
+  @objc func didTapButton() {}
   @objc func click(){}
 
   // MARK: - FUNCTION WHEN A SEGMENTED CONTROL IS SELECTED
   @objc func controlChanged() {
     switch segmentedControl.selectedSegmentIndex {
     case 0 :
-      investmentcollectionView.backgroundColor = .clear
+      collectionView.backgroundColor = .clear
       segmentedControl2.isHidden =  false
       fundingSegmentedControl.isHidden = true
-      investmentcollectionView.isHidden = false
+      collectionView.isHidden = false
       othersSegmentedControl.isHidden = true
       othersView.isHidden = true
       fundingview.isHidden = true
+     collectionView.reloadData()
     case 1:
-      investmentcollectionView.isHidden = true
+      collectionView.isHidden = true
       segmentedControl2.isHidden =  true
       fundingSegmentedControl.isHidden = false
-      investmentcollectionView.isHidden = true
+      collectionView.isHidden = false
       othersSegmentedControl.isHidden = true
-      fundingview.isHidden = false
+    //  fundingview.isHidden = false
       othersView.isHidden = true
+      collectionView.reloadData()
     default:
-      investmentcollectionView.backgroundColor = .clear
+      collectionView.backgroundColor = .clear
       fundingSegmentedControl.isHidden = true
       othersSegmentedControl.isHidden = false
-      investmentcollectionView.isHidden = true
-      othersView.isHidden = false
+      collectionView.isHidden = false
+      //othersView.isHidden = false
+      collectionView.reloadData()
     }
   }
+  
 }
 
 
